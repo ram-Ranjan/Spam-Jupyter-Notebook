@@ -1,0 +1,79 @@
+# Configuration for Hindi Spam Detection Project
+
+# Data paths
+data:
+  raw_path: "data/raw/Spam_or_ham.csv"
+  processed_path: "data/processed/spam_features.csv"
+  encoding: "utf-8"
+
+# Feature engineering parameters
+features:
+  tfidf_max_features: 100
+  spam_words:
+    - 'फ्री'
+    - 'मुफ्त'
+    - 'जल्दी'
+    - 'लिमिटेड'
+    - 'विजेता'
+    - 'इनाम'
+    - 'ऑफर'
+    - 'कॉल'
+    - 'क्लिक'
+    - 'लकी'
+    - 'खरीदें'
+    - 'बधाई'
+    - 'मौका'
+    - 'शीघ्र'
+
+  # Regex patterns
+  patterns:
+    url: 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+    phone: '\b[\+]?[0-9][0-9\-]{9,}\b'
+    money: '(?:₹|RS|INR|\$)\s*\d+(?:,\d+)*(?:\.\d{2})?'
+    special_chars: '[!@#$%^&*(),.?":{}|<>]'
+
+# Model parameters
+model:
+  name: "RandomForest"
+  random_state: 45
+  test_size: 0.2
+  random_state_split: 100
+
+  # RandomForest specific parameters
+  rf_params:
+    n_estimators: 100
+    max_depth: null
+    min_samples_split: 2
+    min_samples_leaf: 1
+
+  # Logistic Regression parameters
+  lr_params:
+    max_iter: 1000
+    random_state: 42
+
+# Training parameters
+training:
+  oversample: true
+  scale_features: true
+  cross_validation: true
+  cv_folds: 5
+
+# Logging
+logging:
+  level: "INFO"
+  log_file: "logs/spam_detection.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Model saving
+model_save:
+  model_path: "models/spam_classifier.pkl"
+  vectorizer_path: "models/tfidf_vectorizer.pkl"
+  scaler_path: "models/scaler.pkl"
+  feature_names_path: "models/feature_names.pkl"
+
+# Evaluation
+evaluation:
+  save_confusion_matrix: true
+  save_classification_report: true
+  save_roc_curve: true
+  report_path: "reports/"
